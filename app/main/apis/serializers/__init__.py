@@ -1,1 +1,1 @@
-from app.main.apis.serializers.stock import *
+from app.main.apis.serializers.stock import stock_list
