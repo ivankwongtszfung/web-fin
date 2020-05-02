@@ -1,0 +1,6 @@
+# dev-requirements.in
+-r requirements.in
+pip-tools
+pylint
+autopep8
+tox

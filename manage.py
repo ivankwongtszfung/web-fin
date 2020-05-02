@@ -21,6 +21,9 @@ app.config['RESTPLUS_MASK_SWAGGER'] = False
 # Enable or disable the 404 default message
 app.config['ERROR_404_HELP'] = False
 
+# Ipython setting
+banner = ''
+
 manager = Manager(app)
 
 migrate = Migrate(app, db)
@@ -42,8 +45,21 @@ def test():
 
 @manager.command
 def shell():
-    import IPython
-    IPython.embed(colors="neutral")
+    from IPython import embed
+    from IPython.terminal.ipapp import load_default_config
+    config_colors = load_default_config().InteractiveShell.colors
+    colors = config_colors if isinstance(config_colors, str) else "NoColor"
+    embed(banner1=banner, user_ns={'app': app}, colors=colors)
+
+# @manager.command
+# def shell():
+#     import IPython
+#     from IPython.terminal.ipapp import load_default_config
+#     c = load_default_config()
+#     c.InteractiveShellEmbed = c.TerminalInteractiveShell
+#     c.InteractiveShellApp.exec_lines = [
+#         'load_ext autoreload', '%autoreload 2', ]
+#     IPython.start_ipython(config=c, argv=[])
 
 
 if __name__ == "__main__":
